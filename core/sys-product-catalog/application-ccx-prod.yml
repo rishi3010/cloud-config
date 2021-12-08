@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://172.16.3.134:1433;databaseName=cliquote
+    username: ENC(/WscG98VfeGMAW2Km0jLzmOw1hobKDG6)
+    password: ENC(KZUC5gJwum+sXnLqDPgWgCw0XEF0xWwXTnFnNSNHbGXI7Lf3szvCDk/n3Tlw0cWRQAQtf7nE3XY=)
+    autoReconnect: true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: sys-product-catalog
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    hibernate:
+      # To be updated in real production usage!
+      ddl-auto: none
+    format_sql: true
+    show-sql: true
+
+specs:
+    productpath: /opt/Product_specs.json?inputType=JsonString
+    allproductpath: /opt/AllProducts_specs.json?inputType=JsonString
+    enum: /opt/enum.json
+
+camel:
+  servlet:
+    mapping:
+      context-path: /api/v1/sys-product-catalog/*
+      enabled: true
+  component:
+    servlet:
+      mapping:
+        context-path: /api/v1/sys-product-catalog/*
+        enabled: true
+
+sql:
+  getRateCard: export_rate_data(VARCHAR :#state ,VARCHAR :#practice, VARCHAR :#role)
+  getSeachFilter: get_product_search_filter(VARCHAR :#payload)
+  getListOfEnum:  getListOfEnumForThirdParty()
+  getExistingProducts: get_existing_products(VARCHAR :#customerId)
+
+
+springfox:
+  documentation:
+    enabled: true
+    swagger-ui:
+      base-url: /api/v1/sys-product-swagger
+      enabled: true
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-},%X{key:-}]"
+
+nab:
+  api-key: 3fabf770073c2466a506
+
+product:
+  status:
+    ignore: Inactive
+  ignore:
+    level: 1,2,3
+
+microsoftKeyURL: ENC(4udhNi2xU5dXcZeBlYgsx6h5uYYsP7WdsIStcEQF1HDBQRpQFlbJocc9MGl6nXzydhEu7rUG0pxURXmBmHYb+YgDm5BHoGQb)
+issuer: ENC(YPLLPMypttQ8/Dt8m7GaB/gAj1JVWYGobHpZG9sMOyPjJoWbqpLbp55Ov6cMsqbioaYiVsz9Ucagj0NhnetTTLBGk0ltwZHs19Q7Kr2Yp8m4gN37uc3cNA==)
+tenant: ENC(Dv+RyowmvDc8mUUFhLMFNr4RHAvE1R19bnZ/BmVU0ukU6KoJKzSSeS/3K/DzJiOg)
+audience: ENC(xu5EfyOUl/+uK95jEYiMHKH7uDUn2cl3tOes0yWYw4podAxubU0dMAFX7SIygapl)

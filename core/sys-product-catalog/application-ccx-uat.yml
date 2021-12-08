@@ -1,0 +1,70 @@
+#jasypt.encryptor.password: Password
+spring:
+  datasource:
+    url: jdbc:sqlserver://172.31.68.130:1433;databaseName=cliquote
+    username: ENC(Y/e0wc1m0hloMnoAb1s0K6Rz9RN52WO3)
+    password: ENC(3h22fXYz+Aaq2fTR4Xr/aEfa7Cf8l9ZHwI42qfwO7JY=)
+    autoReconnect: true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: sys-product-catalog
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    hibernate:
+      # To be updated in real production usage!
+      ddl-auto: none
+    format_sql: true
+    show-sql: true
+
+specs:
+    productpath: /opt/Product_specs.json?inputType=JsonString
+    allproductpath: /opt/AllProducts_specs.json?inputType=JsonString
+    enum: /opt/enum.json?inputType=JsonString
+
+camel:
+  servlet:
+    mapping:
+      context-path: /api/v1/sys-product-catalog/*
+      enabled: true
+  component:
+    servlet:
+      mapping:
+        context-path: /api/v1/sys-product-catalog/*
+        enabled: true
+
+sql:
+  getRateCard: export_rate_data(VARCHAR :#state ,VARCHAR :#practice, VARCHAR :#role)
+  getSeachFilter: get_product_search_filter(VARCHAR :#payload)
+  getListOfEnum:  getListOfEnumForThirdParty()
+  getExistingProducts: get_existing_products(VARCHAR :#customerId)
+
+
+springfox:
+  documentation:
+    enabled: true
+    swagger-ui:
+      base-url: /api/v1/sys-product-swagger
+      enabled: true
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{X-B3-TraceId:-},%X{spanId:-},%X{key:-}]"
+
+microsoftKeyURL: 6RhUvT7lyxs0oE5SfFq96l4XdSU6s/j+DcSXa9BM2y4TohQeRq8iJTUwnyF9h+hDbtGTEgsR+EQyrlhYUZG+7p6I0wAcc8ragOAakllSrEBGfALjIHuj4KPa5GyF7f4C
+issuer: YaPR+PSI1Ns1/fZfO/BLbRzdSINxiMRDP7In25j9FDYVMMcErwThEiE6GAdDYNh7B4OqEB+pRwSsEhNHgCaRwTGJXMrQy+kmwKYPyhtzonC+5snGZM22VuUKoqKMcZRdYOUR4JtVi6LySR1AHUx/pw;;
+tenant: 67IqgrljjuDa+kQgil4wxRlsksBRNKBfSWN2aCU+8scL2EYGngKGObkFV8/sbeylTouQVD0+pgwi7RjPsAp/EQb6T+AdGPR5xpg2oCJEGIw;
+audience: Ni34CbGMDD7hTw79J+bZqbCMthmnaxm8abNCM65iQUU+hcqc7FSvRiNCuJccnEyI9RlUNqj1BkGxkcoA3Fhiw2aJDR6svSH5lUvkYIy63Vs;
+
+
+nab:
+  api-key: 3fabf770073c2466a506
+
+product:
+  status:
+    ignore: Inactive
+  ignore:
+    level: 1,2,3

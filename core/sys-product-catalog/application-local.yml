@@ -1,0 +1,77 @@
+jasypt.encryptor.password: Password
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1432;databaseName=cliquote
+    username: sa
+    password: Cliquote@rootuser123
+    autoReconnect: true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        type: trace
+        show_sql: true
+        format_sql: true
+    hibernate:
+      # To be updated in real production usage!
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    format_sql: true
+    show-sql: true
+  application:
+    name: sys-product-catalog
+specs:
+  productpath: E:/tempProject/sf/sys-product-catalog/specs/Product_specs.json?inputType=JsonString
+  allproductpath: E:/tempProject/sf/sys-product-catalog/specs/AllProducts_specs.json?inputType=JsonString
+  enum: E:/tempProject/sf/sys-product-catalog/specs/enum.json
+
+camel:
+  servlet:
+    mapping:
+      context-path: /api/v1/sys-product-catalog/*
+      enabled: true
+  component:
+    servlet:
+      mapping:
+        context-path: /api/v1/sys-product-catalog/*
+        enabled: true
+
+sql:
+  getRateCard: export_rate_data(VARCHAR :#state ,VARCHAR :#practice, VARCHAR :#role)
+  getSeachFilter: get_product_search_filter(VARCHAR :#payload)
+  getListOfEnum:  getListOfEnumForThirdParty()
+  getExistingProducts: get_existing_products(VARCHAR :#customerId)
+
+
+
+springfox:
+  documentation:
+    enabled: true
+    swagger-ui:
+      base-url: /api/v1/sys-product-swagger
+      enabled: true
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{X-B3-TraceId:-},%X{spanId:-},%X{key:-}]"
+
+microsoftKeyURL: ENC(xfmNWUPjZP9OJ49PSoMo+YvabfgpNBXwxBxZPejMw+3Ri8PCOj7oW/KY3qXQoXP0rHvhhpOwEP3H0q0YkHW41jau7b6ahvzC)
+issuer: ENC(6+dhibE4TacdZV1fqkd/UCIZzeWBWJuTNcPAJoqapBSHtaoZ2EIfIeltYNSuVAyoJO63lJMn1RUX/BuehBGEzxEApTCs3Zp8VWPI0XrVLapB/6+uewx8hw==)
+tenant: ENC(CQmpnZMlMrVOdXqWzbc/DnTq/jsnQw0Tvbqf2OlL/nBUi7IQr8TgRyycqAERaSad)
+audience: ENC(7xpoS4vIy1qh8y6zNFwmwBWAITdwlWxOGeOctbLwnp2x3e5dhdHk9wGmkSC8EYuh)
+server:
+  port: 8090
+
+nab:
+  api-key: 3fabf770073c2466a506
+
+product:
+  status:
+    ignore: Inactive
+  ignore:
+    level: 1,2,3
